@@ -24,10 +24,7 @@ public class Employee {
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 
-	private String spouseName;
-	private String spouseIdNumber;
-
- LongParameterList-SetChild
+	private Spouse spouse;
 	private List<Child> children;
 
 	public Employee(EmployeeData data) {
@@ -45,35 +42,12 @@ public class Employee {
 		this.children = new LinkedList<>();
 	}
 
-=======
-	private List<String> childNames;
-	private List<String> childIdNumbers;
-
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address,
-			int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
-		this.employeeId = employeeId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.idNumber = idNumber;
-		this.address = address;
-		this.yearJoined = yearJoined;
-		this.monthJoined = monthJoined;
-		this.dayJoined = dayJoined;
-		this.isForeigner = isForeigner;
-		this.gender = gender;
-
-		childNames = new LinkedList<String>();
-		childIdNumbers = new LinkedList<String>();
-	}
-
 	/**
-	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade
-	 * kepegawaiannya (grade 1: 3.000.000 per bulan, grade 2: 5.000.000 per bulan,
-	 * grade 3: 7.000.000 per bulan). Jika pegawai adalah warga negara asing gaji
-	 * bulanan diperbesar sebanyak 50%
+	 * Menentukan gaji bulanan berdasarkan grade.
+	 * Grade 1: Rp3.000.000, Grade 2: Rp5.000.000, Grade 3: Rp7.000.000
+	 * Jika WNA, maka gaji ditambah 50%.
 	 */
- main
-	public void setMonthlySalary(int grade) {
+	public void setMonthlySalaryBasedOnGrade(int grade) {
 		int baseSalary;
 
 		switch (grade) {
@@ -94,63 +68,43 @@ public class Employee {
 			baseSalary *= 1.5;
 		}
 
-		this.monthlySalary = (int) baseSalary;
+		this.monthlySalary = baseSalary;
 	}
 
-	public void setAnnualDeductible(int deductible) {
+	public void setAnnualDeductibleAmount(int deductible) {
 		this.annualDeductible = deductible;
 	}
 
-	public void setAdditionalIncome(int income) {
+	public void setAdditionalMonthlyIncome(int income) {
 		this.otherMonthlyIncome = income;
 	}
 
-	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = spouseIdNumber;
+	public void setSpouseData(Spouse spouse) {
+		this.spouse = spouse;
 	}
 
- LongParameterList-SetChild
-	public void addChild(Child child) {
+	public void addChildData(Child child) {
 		children.add(child);
 	}
 
 	public int getAnnualIncomeTax() {
-=======
-	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
-	}
+		LocalDate currentDate = LocalDate.now();
 
-	public int getAnnualIncomeTax() {
-		// Menghitung berapa lama pegawai bekerja dalam setahun ini,
-		// jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
- main
-		LocalDate date = LocalDate.now();
-
-		if (date.getYear() == yearJoined) {
-			monthWorkingInYear = date.getMonthValue() - monthJoined;
+		if (currentDate.getYear() == yearJoined) {
+			monthWorkingInYear = currentDate.getMonthValue() - monthJoined;
 		} else {
 			monthWorkingInYear = 12;
 		}
 
- LongParameterList-SetChild
-		boolean hasNoSpouse = spouseIdNumber == null || spouseIdNumber.isEmpty();
+		boolean hasNoSpouse = (spouse == null || spouse.getIdNumber().isEmpty());
 
-=======
- main
 		return TaxFunction.calculateTax(
 			monthlySalary,
 			otherMonthlyIncome,
 			monthWorkingInYear,
 			annualDeductible,
- LongParameterList-SetChild
 			hasNoSpouse,
 			children.size()
-=======
-			spouseIdNumber == null || spouseIdNumber.isEmpty(),
-			childIdNumbers.size()
- main
 		);
 	}
 }
