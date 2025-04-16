@@ -27,6 +27,25 @@ public class Employee {
 	private String spouseName;
 	private String spouseIdNumber;
 
+ LongParameterList-SetChild
+	private List<Child> children;
+
+	public Employee(EmployeeData data) {
+		this.employeeId = data.employeeId;
+		this.firstName = data.firstName;
+		this.lastName = data.lastName;
+		this.idNumber = data.idNumber;
+		this.address = data.address;
+		this.yearJoined = data.yearJoined;
+		this.monthJoined = data.monthJoined;
+		this.dayJoined = data.dayJoined;
+		this.isForeigner = data.isForeigner;
+		this.gender = data.gender;
+
+		this.children = new LinkedList<>();
+	}
+
+=======
 	private List<String> childNames;
 	private List<String> childIdNumbers;
 
@@ -53,6 +72,7 @@ public class Employee {
 	 * grade 3: 7.000.000 per bulan). Jika pegawai adalah warga negara asing gaji
 	 * bulanan diperbesar sebanyak 50%
 	 */
+ main
 	public void setMonthlySalary(int grade) {
 		int baseSalary;
 
@@ -90,6 +110,13 @@ public class Employee {
 		this.spouseIdNumber = spouseIdNumber;
 	}
 
+ LongParameterList-SetChild
+	public void addChild(Child child) {
+		children.add(child);
+	}
+
+	public int getAnnualIncomeTax() {
+=======
 	public void addChild(String childName, String childIdNumber) {
 		childNames.add(childName);
 		childIdNumbers.add(childIdNumber);
@@ -98,6 +125,7 @@ public class Employee {
 	public int getAnnualIncomeTax() {
 		// Menghitung berapa lama pegawai bekerja dalam setahun ini,
 		// jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
+ main
 		LocalDate date = LocalDate.now();
 
 		if (date.getYear() == yearJoined) {
@@ -106,13 +134,23 @@ public class Employee {
 			monthWorkingInYear = 12;
 		}
 
+ LongParameterList-SetChild
+		boolean hasNoSpouse = spouseIdNumber == null || spouseIdNumber.isEmpty();
+
+=======
+ main
 		return TaxFunction.calculateTax(
 			monthlySalary,
 			otherMonthlyIncome,
 			monthWorkingInYear,
 			annualDeductible,
+ LongParameterList-SetChild
+			hasNoSpouse,
+			children.size()
+=======
 			spouseIdNumber == null || spouseIdNumber.isEmpty(),
 			childIdNumbers.size()
+ main
 		);
 	}
 }
