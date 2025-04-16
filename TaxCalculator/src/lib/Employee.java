@@ -24,6 +24,9 @@ public class Employee {
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 
+ NewparametertomethodXYZ
+	private Spouse spouse;
+=======
 	private String spouseName;
 	private String spouseIdNumber;
 
@@ -31,6 +34,7 @@ public class Employee {
 	private List<Child> children;
 =======
  LongParameterList-SetChild
+ main
 	private List<Child> children;
 
 	public Employee(EmployeeData data) {
@@ -48,6 +52,8 @@ public class Employee {
 		this.children = new LinkedList<>();
 	}
 
+ NewparametertomethodXYZ
+=======
 =======
 	private List<String> childNames;
 	private List<String> childIdNumbers;
@@ -71,15 +77,19 @@ public class Employee {
 
  BadSmell-ClassName
 =======
+ main
 	/**
-	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade
-	 * kepegawaiannya (grade 1: 3.000.000 per bulan, grade 2: 5.000.000 per bulan,
-	 * grade 3: 7.000.000 per bulan). Jika pegawai adalah warga negara asing gaji
-	 * bulanan diperbesar sebanyak 50%
+	 * Menentukan gaji bulanan berdasarkan grade.
+	 * Grade 1: Rp3.000.000, Grade 2: Rp5.000.000, Grade 3: Rp7.000.000
+	 * Jika WNA, maka gaji ditambah 50%.
 	 */
+ NewparametertomethodXYZ
+	public void setMonthlySalaryBasedOnGrade(int grade) {
+=======
  main
  main
 	public void setMonthlySalary(int grade) {
+ main
 		int baseSalary;
 
 		switch (grade) {
@@ -100,22 +110,24 @@ public class Employee {
 			baseSalary *= 1.5;
 		}
 
-		this.monthlySalary = (int) baseSalary;
+		this.monthlySalary = baseSalary;
 	}
 
-	public void setAnnualDeductible(int deductible) {
+	public void setAnnualDeductibleAmount(int deductible) {
 		this.annualDeductible = deductible;
 	}
 
-	public void setAdditionalIncome(int income) {
+	public void setAdditionalMonthlyIncome(int income) {
 		this.otherMonthlyIncome = income;
 	}
 
-	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = spouseIdNumber;
+	public void setSpouseData(Spouse spouse) {
+		this.spouse = spouse;
 	}
 
+ NewparametertomethodXYZ
+	public void addChildData(Child child) {
+=======
  BadSmell-ClassName
 	public void addChild(Child child) {
 		children.add(child);
@@ -125,10 +137,14 @@ public class Employee {
 =======
  LongParameterList-SetChild
 	public void addChild(Child child) {
+ main
 		children.add(child);
 	}
 
 	public int getAnnualIncomeTax() {
+ NewparametertomethodXYZ
+		LocalDate currentDate = LocalDate.now();
+=======
 =======
 	public void addChild(String childName, String childIdNumber) {
 		childNames.add(childName);
@@ -141,13 +157,18 @@ public class Employee {
  main
  main
 		LocalDate date = LocalDate.now();
+ main
 
-		if (date.getYear() == yearJoined) {
-			monthWorkingInYear = date.getMonthValue() - monthJoined;
+		if (currentDate.getYear() == yearJoined) {
+			monthWorkingInYear = currentDate.getMonthValue() - monthJoined;
 		} else {
 			monthWorkingInYear = 12;
 		}
 
+ NewparametertomethodXYZ
+		boolean hasNoSpouse = (spouse == null || spouse.getIdNumber().isEmpty());
+
+=======
  BadSmell-ClassName
 		boolean hasNoSpouse = spouseIdNumber == null || spouseIdNumber.isEmpty();
 
@@ -158,11 +179,16 @@ public class Employee {
 =======
  main
  main
+ main
 		return TaxFunction.calculateTax(
 			monthlySalary,
 			otherMonthlyIncome,
 			monthWorkingInYear,
 			annualDeductible,
+ NewparametertomethodXYZ
+			hasNoSpouse,
+			children.size()
+=======
  BadSmell-ClassName
 			hasNoSpouse,
 			children.size()
@@ -173,6 +199,7 @@ public class Employee {
 =======
 			spouseIdNumber == null || spouseIdNumber.isEmpty(),
 			childIdNumbers.size()
+ main
  main
  main
 		);
