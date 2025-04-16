@@ -27,6 +27,7 @@ public class Employee {
 	private String spouseName;
 	private String spouseIdNumber;
 
+ LongParameterList-SetChild
 	private List<Child> children;
 
 	public Employee(EmployeeData data) {
@@ -44,6 +45,34 @@ public class Employee {
 		this.children = new LinkedList<>();
 	}
 
+=======
+	private List<String> childNames;
+	private List<String> childIdNumbers;
+
+	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address,
+			int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
+		this.employeeId = employeeId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.idNumber = idNumber;
+		this.address = address;
+		this.yearJoined = yearJoined;
+		this.monthJoined = monthJoined;
+		this.dayJoined = dayJoined;
+		this.isForeigner = isForeigner;
+		this.gender = gender;
+
+		childNames = new LinkedList<String>();
+		childIdNumbers = new LinkedList<String>();
+	}
+
+	/**
+	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade
+	 * kepegawaiannya (grade 1: 3.000.000 per bulan, grade 2: 5.000.000 per bulan,
+	 * grade 3: 7.000.000 per bulan). Jika pegawai adalah warga negara asing gaji
+	 * bulanan diperbesar sebanyak 50%
+	 */
+ main
 	public void setMonthlySalary(int grade) {
 		int baseSalary;
 
@@ -81,11 +110,22 @@ public class Employee {
 		this.spouseIdNumber = spouseIdNumber;
 	}
 
+ LongParameterList-SetChild
 	public void addChild(Child child) {
 		children.add(child);
 	}
 
 	public int getAnnualIncomeTax() {
+=======
+	public void addChild(String childName, String childIdNumber) {
+		childNames.add(childName);
+		childIdNumbers.add(childIdNumber);
+	}
+
+	public int getAnnualIncomeTax() {
+		// Menghitung berapa lama pegawai bekerja dalam setahun ini,
+		// jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
+ main
 		LocalDate date = LocalDate.now();
 
 		if (date.getYear() == yearJoined) {
@@ -94,15 +134,23 @@ public class Employee {
 			monthWorkingInYear = 12;
 		}
 
+ LongParameterList-SetChild
 		boolean hasNoSpouse = spouseIdNumber == null || spouseIdNumber.isEmpty();
 
+=======
+ main
 		return TaxFunction.calculateTax(
 			monthlySalary,
 			otherMonthlyIncome,
 			monthWorkingInYear,
 			annualDeductible,
+ LongParameterList-SetChild
 			hasNoSpouse,
 			children.size()
+=======
+			spouseIdNumber == null || spouseIdNumber.isEmpty(),
+			childIdNumbers.size()
+ main
 		);
 	}
 }
