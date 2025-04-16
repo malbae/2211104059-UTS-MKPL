@@ -27,8 +27,7 @@ public class Employee {
 	private String spouseName;
 	private String spouseIdNumber;
 
-	private List<String> childNames;
-	private List<String> childIdNumbers;
+	private List<Child> children;
 
 	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address,
 			int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
@@ -43,16 +42,9 @@ public class Employee {
 		this.isForeigner = isForeigner;
 		this.gender = gender;
 
-		childNames = new LinkedList<String>();
-		childIdNumbers = new LinkedList<String>();
+		children = new LinkedList<>();
 	}
 
-	/**
-	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade
-	 * kepegawaiannya (grade 1: 3.000.000 per bulan, grade 2: 5.000.000 per bulan,
-	 * grade 3: 7.000.000 per bulan). Jika pegawai adalah warga negara asing gaji
-	 * bulanan diperbesar sebanyak 50%
-	 */
 	public void setMonthlySalary(int grade) {
 		int baseSalary;
 
@@ -90,14 +82,11 @@ public class Employee {
 		this.spouseIdNumber = spouseIdNumber;
 	}
 
-	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
+	public void addChild(Child child) {
+		children.add(child);
 	}
 
 	public int getAnnualIncomeTax() {
-		// Menghitung berapa lama pegawai bekerja dalam setahun ini,
-		// jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
 		LocalDate date = LocalDate.now();
 
 		if (date.getYear() == yearJoined) {
@@ -106,13 +95,15 @@ public class Employee {
 			monthWorkingInYear = 12;
 		}
 
+		boolean hasNoSpouse = spouseIdNumber == null || spouseIdNumber.isEmpty();
+
 		return TaxFunction.calculateTax(
 			monthlySalary,
 			otherMonthlyIncome,
 			monthWorkingInYear,
 			annualDeductible,
-			spouseIdNumber == null || spouseIdNumber.isEmpty(),
-			childIdNumbers.size()
+			hasNoSpouse,
+			children.size()
 		);
 	}
 }
