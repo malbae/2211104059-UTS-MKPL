@@ -6,14 +6,15 @@ public class EmployeeData {
 	public String lastName;
 	public String idNumber;
 	public String address;
+
 	public int yearJoined;
 	public int monthJoined;
 	public int dayJoined;
 	public boolean isForeigner;
-	public boolean gender; // true = Laki-laki, false = Perempuan
+	public boolean gender;
 
 	public EmployeeData(String employeeId, String firstName, String lastName, String idNumber, String address,
-	                    int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
+			int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
